@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레드타이밍 일일 퀴즈</title>
+    <style>
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #results {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>오늘의 시장 퀴즈</h2>
+        <form id="quiz-form">
+            <div class="question" id="q1">
+                <p>1. 7월 8일 코스닥 시장에서 2차전지 관련 종목들이 강세를 보인 주요 원인은 무엇인가요?</p>
+                <label><input type="radio" name="q1" value="a"> a) 국내 정부의 지원 정책 발표</label><br>
+                <label><input type="radio" name="q1" value="b"> b) 테슬라 주가의 강세</label><br>
+                <label><input type="radio" name="q1" value="c"> c) 새로운 배터리 기술 개발 발표</label><br>
+                <label><input type="radio" name="q1" value="d"> d) 중국의 전기차 수요 급증</label>
+            </div>
+            <!-- 나머지 질문들도 같은 방식으로 추가 -->
+            <button type="submit">정답 확인</button>
+        </form>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const answers = {
+                q1: 'b',
+                q2: 'a',
+                q3: 'c',
+                q4: 'c',
+                q5: 'b'
+            };
+
+            let score = 0;
+            let results = '';
+
+            for (let i = 1; i <= 5; i++) {
+                const question = document.querySelector(`input[name="q${i}"]:checked`);
+                if (question) {
+                    if (question.value === answers[`q${i}`]) {
+                        score++;
+                        results += `<p>문제 ${i}: 정답입니다!</p>`;
+                    } else {
+                        results += `<p>문제 ${i}: 오답입니다. 정답은 ${answers[`q${i}`]}입니다.</p>`;
+                    }
+                } else {
+                    results += `<p>문제 ${i}: 답을 선택하지 않았습니다.</p>`;
+                }
+            }
+
+            results += `<p>총점: ${score}/5</p>`;
+            document.getElementById('results').innerHTML = results;
+        });
+    </script>
+</body>
+</html>
